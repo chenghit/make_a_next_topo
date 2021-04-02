@@ -1,27 +1,25 @@
-#!/usr/bin/env python3
-
 import json
 
 from nornir import InitNornir
 from nornir.core.filter import F
-from nornir_scrapli.tasks import send_command
+from nornir_netmiko.tasks import netmiko_send_command
 
 nr = InitNornir(config_file='config.yaml')
 selab = nr.filter(F(groups__contains='selab'))
 
 def get_mgmt_ip(inst):
-    output = inst.run(task=send_command,
-                      command='show int mgmt0 | json')
+    output = inst.run(task=netmiko_send_command,
+                      command_string='show int mgmt0 | json')
     return output
 
 def get_host_info(inst):
-    output = inst.run(task=send_command,
-                      command='show version | json')
+    output = inst.run(task=netmiko_send_command,
+                      command_string='show version | json')
     return output
 
 def get_lldp_info(inst):
-    output = inst.run(task=send_command,
-                      command='show lldp neighbors | json')
+    output = inst.run(task=netmiko_send_command,
+                      command_string='show lldp neighbors | json')
     return output
 
 host_info = get_host_info(selab)
