@@ -3,6 +3,10 @@ selab:
     username: admin
     password: password
     connection_options:
+        netmiko:
+            platform: nxos_ssh
+            extras:
+                secret: password
         scrapli:
             platform: cisco_nxos
             extras:
